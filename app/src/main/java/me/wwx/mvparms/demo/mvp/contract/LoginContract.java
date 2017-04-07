@@ -1,13 +1,10 @@
 package me.wwx.mvparms.demo.mvp.contract;
 
+
 import com.jess.arms.mvp.BaseView;
 import com.jess.arms.mvp.IModel;
 
-import java.util.List;
-import java.util.Map;
-
-import me.wwx.mvparms.demo.mvp.model.entity.Login;
-import me.wwx.mvparms.demo.mvp.model.entity.User;
+import me.wwx.mvparms.demo.mvp.model.entity.LoginEntity;
 import rx.Observable;
 
 /**
@@ -28,10 +25,14 @@ import rx.Observable;
 public interface LoginContract {
     //对于经常使用的关于UI的方法可以定义到BaseView中,如显示隐藏进度条,和显示文字消息
     interface View extends BaseView {
+        void jumpMainActivity();
     }
 
     //Model层定义接口,外部只需关心model返回的数据,无需关心内部细节,及是否使用缓存
     interface Model extends IModel {
-        Observable<Login> getLogin();
+        Observable<LoginEntity> getLogin(String userName, String pwd,
+                                         String macAddr, String xmid,
+                                        String app_version, String mobile_type,
+                                        String mobile_brand, String mobile_version);
     }
 }

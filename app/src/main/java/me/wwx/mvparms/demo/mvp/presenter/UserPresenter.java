@@ -11,17 +11,15 @@ import com.jess.arms.utils.RxUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
-import me.wwx.mvparms.demo.mvp.contract.UserContract;
-import me.wwx.mvparms.demo.mvp.model.entity.Login;
-import me.wwx.mvparms.demo.mvp.model.entity.User;
-import me.wwx.mvparms.demo.mvp.ui.adapter.UserAdapter;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
+import me.wwx.mvparms.demo.mvp.contract.UserContract;
+import me.wwx.mvparms.demo.mvp.model.entity.User;
+import me.wwx.mvparms.demo.mvp.ui.adapter.UserAdapter;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.schedulers.Schedulers;
@@ -95,15 +93,15 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
                             mRootView.endLoadMore();//隐藏下拉加载更多的进度条
                     }
                 })
-                .compose(RxUtils.<Login>bindToLifecycle(mRootView))//使用RXlifecycle,使subscription和activity一起销毁
-                .subscribe(new ErrorHandleSubscriber<Login>(mErrorHandler) {
+                .compose(RxUtils.<List<User>>bindToLifecycle(mRootView))//使用RXlifecycle,使subscription和activity一起销毁
+                .subscribe(new ErrorHandleSubscriber<List<User>>(mErrorHandler) {
                     @Override
-                    public void onNext(Login users) {
-//                        lastUserId = users.get(users.size() - 1).getId();//记录最后一个id,用于下一次请求
-//                        if (pullToRefresh) mUsers.clear();//如果是上拉刷新则清空列表
-//                        for (Login user : users) {
-//                            mUsers.add(user);
-//                        }
+                    public void onNext(List<User> users) {
+                        lastUserId = users.get(users.size() - 1).getId();//记录最后一个id,用于下一次请求
+                        if (pullToRefresh) mUsers.clear();//如果是上拉刷新则清空列表
+                        for (User user : users) {
+                            mUsers.add(user);
+                        }
                         mAdapter.notifyDataSetChanged();//通知更新数据
                     }
                 });

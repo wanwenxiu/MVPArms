@@ -4,7 +4,6 @@ import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BaseModel;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -14,7 +13,6 @@ import io.rx_cache.Reply;
 import me.wwx.mvparms.demo.mvp.contract.UserContract;
 import me.wwx.mvparms.demo.mvp.model.api.cache.CacheManager;
 import me.wwx.mvparms.demo.mvp.model.api.service.ServiceManager;
-import me.wwx.mvparms.demo.mvp.model.entity.Login;
 import me.wwx.mvparms.demo.mvp.model.entity.User;
 import rx.Observable;
 import rx.functions.Func1;
@@ -34,17 +32,17 @@ public class UserModel extends BaseModel<ServiceManager, CacheManager> implement
 
 
     @Override
-    public Observable<Login> getUsers(int lastIdQueried, boolean update) {
-        Observable<Login> users = mServiceManager.getUserService()
-                .getUsers();
+    public Observable<List<User>> getUsers(int lastIdQueried, boolean update) {
+        Observable<List<User>> users = mServiceManager.getUserService()
+                .getUsers(lastIdQueried, USERS_PER_PAGE);
         //使用rxcache缓存,上拉刷新则不读取缓存,加载更多读取缓存
         return mCacheManager.getCommonCache()
                 .getUsers(users
                         , new DynamicKey(lastIdQueried)
                         , new EvictDynamicKey(update))
-                .flatMap(new Func1<Reply<Login>, Observable<Login>>() {
+                .flatMap(new Func1<Reply<List<User>>, Observable<List<User>>>() {
                     @Override
-                    public Observable<Login> call(Reply<Login> listReply) {
+                    public Observable<List<User>> call(Reply<List<User>> listReply) {
                         return Observable.just(listReply.getData());
                     }
                 });

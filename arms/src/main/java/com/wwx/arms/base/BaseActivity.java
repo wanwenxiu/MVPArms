@@ -4,11 +4,15 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.wwx.arms.mvp.Presenter;
+import com.jaeger.library.StatusBarUtil;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.wwx.arms.R;
+import com.wwx.arms.mvp.Presenter;
 import com.zhy.autolayout.AutoFrameLayout;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.AutoRelativeLayout;
@@ -58,14 +62,35 @@ public abstract class BaseActivity<P extends Presenter> extends RxAppCompatActiv
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        super.setContentView(R.layout.activity_base);
         mApplication = (BaseApplication) getApplication();
+
+//        setStatusBar();
+//        // 经测试在代码里直接声明透明状态栏更有效
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
+//            localLayoutParams.flags = (WindowManager.LayoutParams.FIRST_APPLICATION_WINDOW | localLayoutParams.flags);
+//        }
+//        initToolbar();
+
         if (useEventBus())//如果要使用eventbus请将此方法返回true
-            EventBus.getDefault().register(this);//注册到事件主线
+        EventBus.getDefault().register(this);//注册到事件主线
         setContentView(initView());
         //绑定到butterknife
         mUnbinder = ButterKnife.bind(this);
         ComponentInject();//依赖注入
         initData();
+    }
+
+    private void initToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+    }
+
+    protected void setStatusBar() {
+        StatusBarUtil.setColor(this, ContextCompat.getColor(this,R.color.toolbar_color),112);
     }
 
     /**

@@ -2,8 +2,6 @@ package me.wwx.mvparms.demo.mvp.presenter;
 
 import android.app.Application;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 
 import com.jess.arms.base.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
@@ -11,17 +9,15 @@ import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.RxUtils;
 import com.jess.arms.widget.imageloader.ImageLoader;
 
-import java.util.List;
-import java.util.Map;
-
 import javax.inject.Inject;
 
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 import me.wwx.mvparms.demo.mvp.contract.LoginContract;
-import me.wwx.mvparms.demo.mvp.model.entity.Login;
-import me.wwx.mvparms.demo.mvp.model.entity.User;
+import me.wwx.mvparms.demo.mvp.model.entity.LoginEntity;
+import me.wwx.mvparms.demo.mvp.ui.util.PhoneUtil;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.schedulers.Schedulers;
@@ -64,8 +60,8 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
     /**
      * 请求登录数据
      */
-    public void requestTestData(final TextView tv){
-        mModel.getLogin()
+    public void requestTestData(String username,String pwd){
+        Subscription subscribe = mModel.getLogin(username, PhoneUtil.getMD5(pwd), PhoneUtil.getDeviceId(mApplication), "321", PhoneUtil.getVersion(mApplication), "A", PhoneUtil.getPhoneBrand() + PhoneUtil.getPhoneModel(), PhoneUtil.getPhoneSysVersion())
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(1, 1))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .doOnSubscribe(new Action0() {
@@ -81,12 +77,15 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
                         Log.d("geek", " doAfterTerminate call: 进入");
                     }
                 })
-                .compose(RxUtils.<Login>bindToLifecycle(mRootView))//使用RXlifecycle,使subscription和activity一起销毁
-                .subscribe(new ErrorHandleSubscriber<Login>(mErrorHandler) {
+                .compose(RxUtils.<LoginEntity>bindToLifecycle(mRootView))//使用RXlifecycle,使subscription和activity一起销毁
+                .subscribe(new ErrorHandleSubscriber<LoginEntity>(mErrorHandler) {
                     @Override
-                    public void onNext(Login users) {
-                        Log.d("geek", "subscribe onNext: users"+users.toString());
-                        tv.setText(users.getMSG());
+                    public void onNext(LoginEntity users) {
+                        Log.d("geek", "subscribe onNext: users" + users.toString());
+                        if (users != null) {
+                            mRootView.jumpMainActivity();
+                            mRootView.killMyself();
+                        }
                     }
                 });
     }

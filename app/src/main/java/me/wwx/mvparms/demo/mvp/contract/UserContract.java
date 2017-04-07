@@ -6,9 +6,7 @@ import com.jess.arms.mvp.IModel;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.util.List;
-import java.util.Map;
 
-import me.wwx.mvparms.demo.mvp.model.entity.Login;
 import me.wwx.mvparms.demo.mvp.model.entity.User;
 import rx.Observable;
 
@@ -26,7 +24,7 @@ public interface UserContract {
         RxPermissions getRxPermissions();
     }
     //Model层定义接口,外部只需关心model返回的数据,无需关心内部细节,及是否使用缓存
-    interface Model extends IModel{
-        Observable<Login> getUsers(int lastIdQueried, boolean update);
+    interface Model extends IModel {
+        Observable<List<User>> getUsers(int lastIdQueried, boolean update);
     }
 }

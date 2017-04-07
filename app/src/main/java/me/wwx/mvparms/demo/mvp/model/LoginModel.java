@@ -7,20 +7,13 @@ import com.google.gson.Gson;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BaseModel;
 
-import java.util.List;
-import java.util.Map;
-
 import javax.inject.Inject;
 
-import io.rx_cache.DynamicKey;
-import io.rx_cache.EvictDynamicKey;
-import io.rx_cache.Reply;
 import me.wwx.mvparms.demo.mvp.contract.LoginContract;
 import me.wwx.mvparms.demo.mvp.model.api.cache.CacheManager;
 import me.wwx.mvparms.demo.mvp.model.api.service.ServiceManager;
-import me.wwx.mvparms.demo.mvp.model.entity.Login;
+import me.wwx.mvparms.demo.mvp.model.entity.LoginEntity;
 import rx.Observable;
-import rx.functions.Func1;
 
 
 /**
@@ -58,9 +51,12 @@ public class LoginModel extends BaseModel<ServiceManager, CacheManager> implemen
     }
 
     @Override
-    public Observable<Login> getLogin() {
-        Observable<Login> users = mServiceManager.getUserService()
-                .getUsers();
+    public Observable<LoginEntity> getLogin(String userName, String pwd,
+                                            String macAddr, String xmid,
+                                            String app_version, String mobile_type,
+                                            String mobile_brand, String mobile_version) {
+        Observable<LoginEntity> users = mServiceManager.getUserService()
+                .login(userName,pwd,macAddr,xmid,app_version,mobile_type,mobile_brand,mobile_version);
         Log.d("geek", "LoginModel getLogin: users="+users.toString());
         return  users;
 //        //使用rxcache缓存,上拉刷新则不读取缓存,加载更多读取缓存

@@ -3,7 +3,6 @@ package com.wwx.arms.base;
 import android.app.Application;
 import android.content.Context;
 
-import com.jess.arms.di.component.DaggerBaseComponent;
 import com.wwx.arms.di.module.AppModule;
 import com.wwx.arms.di.module.ClientModule;
 import com.wwx.arms.di.module.GlobeConfigModule;
@@ -40,11 +39,11 @@ public abstract class BaseApplication extends Application {
         super.onCreate();
         mApplication = this;
         this.mAppModule = new AppModule(this);//提供application
-        DaggerBaseComponent
-                .builder()
-                .appModule(mAppModule)
-                .build()
-                .inject(this);
+//        DaggerBaseComponent
+//                .builder()
+//                .appModule(mAppModule)
+//                .build()
+//                .inject(this);
         this.mImagerModule = new ImageModule();//图片加载框架默认使用glide
         this.mClientModule = new ClientModule(mAppManager);//用于提供okhttp和retrofit的单例
         this.mGlobeConfigModule = checkNotNull(getGlobeConfigModule(), "lobeConfigModule is required");

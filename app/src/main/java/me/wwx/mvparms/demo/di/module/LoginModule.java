@@ -1,8 +1,5 @@
 package me.wwx.mvparms.demo.di.module;
 
-import com.google.gson.Gson;
-
-import android.app.Application;
 
 import com.jess.arms.di.scope.ActivityScope;
 

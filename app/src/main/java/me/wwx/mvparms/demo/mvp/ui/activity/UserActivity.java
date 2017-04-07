@@ -30,10 +30,10 @@ import timber.log.Timber;
 public class UserActivity extends WEActivity<UserPresenter> implements UserContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     @Nullable
-    @BindView(me.wwx.mvparms.demo.R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @Nullable
-    @BindView(me.wwx.mvparms.demo.R.id.swipeRefreshLayout)
+    @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     private Paginate mPaginate;

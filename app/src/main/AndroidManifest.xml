@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="me.wwx.mvparms.demo.mvp.ui.activity.LoginActivity">
+        <activity android:name="me.wwx.mvparms.demo.mvp.ui.activity.LoginActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -38,9 +39,9 @@
             android:name="design_height"
             android:value="1920"/>
         <!--glide配置-->
-        <meta-data
+        <!--<meta-data
             android:name="com.wwx.arms.widget.imageloader.glide.GlideConfiguration"
-            android:value="GlideModule"/>
+            android:value="GlideModule"/>-->
 
     </application>
 

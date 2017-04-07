@@ -1,5 +1,6 @@
 package me.wwx.mvparms.demo.di.module;
 
+
 import com.jess.arms.di.scope.ActivityScope;
 
 import dagger.Module;

@@ -1,8 +1,6 @@
 package common;
 
 import android.content.Context;
-import android.text.TextUtils;
-import android.util.Log;
 
 import com.jess.arms.base.BaseApplication;
 import com.jess.arms.di.module.GlobeConfigModule;
@@ -11,15 +9,11 @@ import com.jess.arms.utils.UiUtils;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
 import me.wwx.mvparms.demo.BuildConfig;
 import me.wwx.mvparms.demo.di.module.CacheModule;
 import me.wwx.mvparms.demo.di.module.ServiceModule;
 import me.wwx.mvparms.demo.mvp.model.api.Api;
-import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;

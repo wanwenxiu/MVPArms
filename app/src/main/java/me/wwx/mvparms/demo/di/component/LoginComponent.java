@@ -1,5 +1,6 @@
 package me.wwx.mvparms.demo.di.component;
 
+
 import com.jess.arms.di.scope.ActivityScope;
 
 import common.AppComponent;

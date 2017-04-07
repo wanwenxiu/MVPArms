@@ -49,7 +49,6 @@ public class UserItemHolder extends BaseHolder<User> {
                 .build());
     }
 
-
     @Override
     protected void onRelease() {
         mImageLoader.clear(mApplication,GlideImageConfig.builder()

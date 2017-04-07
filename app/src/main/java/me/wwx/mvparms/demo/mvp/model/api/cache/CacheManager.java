@@ -1,5 +1,6 @@
 package me.wwx.mvparms.demo.mvp.model.api.cache;
 
+
 import com.jess.arms.http.BaseCacheManager;
 
 import javax.inject.Inject;

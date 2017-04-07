@@ -13,19 +13,27 @@ import me.wwx.mvparms.demo.mvp.model.api.Api;
 
 public class BaseJson<T> implements Serializable{
     private T data;
-    private String code;
-    private String msg;
+    private String status;
+    private String MSG;
 
     public T getData() {
         return data;
     }
 
-    public String getCode() {
-        return code;
+    public String getStatus() {
+        return status;
     }
 
-    public String getMsg() {
-        return msg;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getMSG() {
+        return MSG;
+    }
+
+    public void setMSG(String MSG) {
+        this.MSG = MSG;
     }
 
     /**
@@ -33,7 +41,7 @@ public class BaseJson<T> implements Serializable{
      * @return
      */
     public boolean isSuccess() {
-        if (code.equals(Api.RequestSuccess)) {
+        if (status.equals(Api.RequestSuccess)) {
             return true;
         } else {
             return false;

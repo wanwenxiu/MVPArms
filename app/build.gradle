@@ -62,4 +62,8 @@ dependencies {
     debugCompile rootProject.ext.dependencies["canary-debug"]
     releaseCompile rootProject.ext.dependencies["canary-release"]
     testCompile rootProject.ext.dependencies["canary-release"]
+    //水波纹
+    compile 'com.github.traex.rippleeffect:library:1.2.3'
+    //查看密码
+    compile 'com.marlonmafra.android.widget:edittext-password:1.0.0'
 }

@@ -6,9 +6,9 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.jess.arms.utils.UiUtils;
+import com.marlonmafra.android.widget.EditTextPassword;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,8 +20,10 @@ import me.wwx.mvparms.demo.di.component.DaggerLoginComponent;
 import me.wwx.mvparms.demo.di.module.LoginModule;
 import me.wwx.mvparms.demo.mvp.contract.LoginContract;
 import me.wwx.mvparms.demo.mvp.presenter.LoginPresenter;
+import me.wwx.mvparms.demo.mvp.ui.view.DeleteEditText;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
+
 
 /**
  * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同
@@ -40,10 +42,12 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 public class LoginActivity extends WEActivity<LoginPresenter> implements LoginContract.View {
 
-    @BindView(R.id.test)
-    Button test;
-    @BindView(R.id.tv_data)
-    TextView tvData;
+    @BindView(R.id.username)
+    DeleteEditText username;
+    @BindView(R.id.password)
+    EditTextPassword password;
+    @BindView(R.id.login_button)
+    Button loginButton;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -62,8 +66,7 @@ public class LoginActivity extends WEActivity<LoginPresenter> implements LoginCo
 
     @Override
     protected void initData() {
-        tvData.setText("未请求到数据");
-        mPresenter.requestTestData(tvData);
+
     }
 
     @Override
@@ -98,15 +101,18 @@ public class LoginActivity extends WEActivity<LoginPresenter> implements LoginCo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-/* //载入图片框架
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'jp.wasabeef:glide-transformations:2.0.2'
-*/
-
+//        getSupportActionBar().setTitle("登录");
     }
 
-    @OnClick(R.id.test)
+    @OnClick(R.id.login_button)
     public void onViewClicked() {
-        initData();
+        mPresenter.requestTestData(username.getText().toString(),password.getText().toString());
+    }
+
+    @Override
+    public void jumpMainActivity() {
+        Intent login_main = new Intent(this,
+                UserActivity.class);
+        launchActivity(login_main);
     }
 }
