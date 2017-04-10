@@ -16,6 +16,10 @@ public class BaseJson<T> implements Serializable{
     private String status;
     private String MSG;
 
+    public void setData(T data) {
+        this.data = data;
+    }
+
     public T getData() {
         return data;
     }
@@ -46,5 +50,14 @@ public class BaseJson<T> implements Serializable{
         } else {
             return false;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "BaseJson{" +
+                "data=" + data +
+                ", status='" + status + '\'' +
+                ", MSG='" + MSG + '\'' +
+                '}';
     }
 }

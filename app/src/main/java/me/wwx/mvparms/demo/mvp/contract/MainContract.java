@@ -1,11 +1,7 @@
 package me.wwx.mvparms.demo.mvp.contract;
 
-
 import com.jess.arms.mvp.BaseView;
 import com.jess.arms.mvp.IModel;
-
-import me.wwx.mvparms.demo.mvp.model.entity.LoginEntity;
-import rx.Observable;
 
 /**
  * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同
@@ -17,23 +13,19 @@ import rx.Observable;
  */
 
 /**
- * 作者：wwx on 2017/4/5 0005 15:27
+ * 作者：wwx on 2017/4/7 0007 15:24
  * 邮箱：wanwenxiu0709@foxmail.com
  * 描述：
  */
 
-public interface LoginContract {
+public interface MainContract {
     //对于经常使用的关于UI的方法可以定义到BaseView中,如显示隐藏进度条,和显示文字消息
     interface View extends BaseView {
-        void jumpMainActivity();
-        void clickJumpActivity();
+
     }
 
     //Model层定义接口,外部只需关心model返回的数据,无需关心内部细节,及是否使用缓存
     interface Model extends IModel {
-        Observable<LoginEntity> getLogin(String userName, String pwd,
-                                                   String macAddr, String xmid,
-                                                   String app_version, String mobile_type,
-                                                   String mobile_brand, String mobile_version);
+
     }
 }

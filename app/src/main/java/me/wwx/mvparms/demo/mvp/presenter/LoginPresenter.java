@@ -2,11 +2,13 @@ package me.wwx.mvparms.demo.mvp.presenter;
 
 import android.app.Application;
 import android.util.Log;
+import android.widget.Button;
 
 import com.jess.arms.base.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.RxUtils;
+import com.jess.arms.utils.UiUtils;
 import com.jess.arms.widget.imageloader.ImageLoader;
 
 import javax.inject.Inject;
@@ -60,7 +62,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
     /**
      * 请求登录数据
      */
-    public void requestTestData(String username,String pwd){
+    public void requestTestData(String username, String pwd, final Button loginButton){
         Subscription subscribe = mModel.getLogin(username, PhoneUtil.getMD5(pwd), PhoneUtil.getDeviceId(mApplication), "321", PhoneUtil.getVersion(mApplication), "A", PhoneUtil.getPhoneBrand() + PhoneUtil.getPhoneModel(), PhoneUtil.getPhoneSysVersion())
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(1, 1))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
@@ -82,10 +84,17 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
                     @Override
                     public void onNext(LoginEntity users) {
                         Log.d("geek", "subscribe onNext: users" + users.toString());
-                        if (users != null) {
-                            mRootView.jumpMainActivity();
-                            mRootView.killMyself();
-                        }
+//                            mRootView.jumpMainActivity();
+//                            mRootView.killMyself();
+//                            mRootView.showMessage("登陆成功");
+                              mRootView.clickJumpActivity();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        UiUtils.SnackbarText(e.getMessage());
+                        Log.d("geek", "onError: ");
                     }
                 });
     }

@@ -1,12 +1,18 @@
 package me.wwx.mvparms.demo.mvp.ui.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 
+import com.jaeger.library.StatusBarUtil;
 import com.jess.arms.utils.UiUtils;
 import com.marlonmafra.android.widget.EditTextPassword;
 
@@ -48,6 +54,8 @@ public class LoginActivity extends WEActivity<LoginPresenter> implements LoginCo
     EditTextPassword password;
     @BindView(R.id.login_button)
     Button loginButton;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -100,13 +108,30 @@ public class LoginActivity extends WEActivity<LoginPresenter> implements LoginCo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setStatusBar();
+        // 经测试在代码里直接声明透明状态栏更有效
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
+            localLayoutParams.flags = (WindowManager.LayoutParams.FIRST_APPLICATION_WINDOW | localLayoutParams.flags);
+        }
+        initToolbar();
         ButterKnife.bind(this);
-//        getSupportActionBar().setTitle("登录");
+        getSupportActionBar().setTitle("登录");
+    }
+
+    private void initToolbar() {
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+    }
+
+    protected void setStatusBar() {
+        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.toolbar_color), 112);
     }
 
     @OnClick(R.id.login_button)
     public void onViewClicked() {
-        mPresenter.requestTestData(username.getText().toString(),password.getText().toString());
+        mPresenter.requestTestData(username.getText().toString(), password.getText().toString(), loginButton);
     }
 
     @Override
@@ -114,5 +139,17 @@ public class LoginActivity extends WEActivity<LoginPresenter> implements LoginCo
         Intent login_main = new Intent(this,
                 UserActivity.class);
         launchActivity(login_main);
+    }
+
+    @Override
+    public void clickJumpActivity() {
+        Snackbar.make(loginButton,"登陆成功",Snackbar.LENGTH_LONG).setAction("ok", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpMainActivity();
+            }
+        })
+        .setActionTextColor(getResources().getColor(R.color.white))
+        .show();
     }
 }

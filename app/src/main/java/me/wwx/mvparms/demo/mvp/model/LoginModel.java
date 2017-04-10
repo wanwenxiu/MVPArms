@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import me.wwx.mvparms.demo.mvp.contract.LoginContract;
 import me.wwx.mvparms.demo.mvp.model.api.cache.CacheManager;
 import me.wwx.mvparms.demo.mvp.model.api.service.ServiceManager;
+import me.wwx.mvparms.demo.mvp.model.entity.BaseJson;
 import me.wwx.mvparms.demo.mvp.model.entity.LoginEntity;
 import rx.Observable;
 

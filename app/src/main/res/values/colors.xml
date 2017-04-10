@@ -9,4 +9,5 @@
     <color name="toolbar_color">#018AF1</color>
     <!-- 文本框的边框颜色 -->
     <color name="text_border">#b5b5b5</color>
+
 </resources>

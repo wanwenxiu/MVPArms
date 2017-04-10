@@ -25,9 +25,9 @@ public interface UserService {
     //shouji=%1$s&pwd=%2$s&macAddr=%3$s&id=%4$s&app_version=%5$s&mobile_type=%6$s&mobile_brand=%7$s&mobile_version=%8$s"
     @GET("mall/androidUser_findUser?")
     Observable<LoginEntity> login(@Query("shouji") String username, @Query("pwd") String password,
-                                  @Query("macAddr") String macAddr, @Query("id") String xmid,
-                                  @Query("app_version") String app_version, @Query("mobile_type") String mobile_type,
-                                  @Query("mobile_brand") String mobile_brand, @Query("mobile_version") String mobile_version);
+                                            @Query("macAddr") String macAddr, @Query("id") String xmid,
+                                            @Query("app_version") String app_version, @Query("mobile_type") String mobile_type,
+                                            @Query("mobile_brand") String mobile_brand, @Query("mobile_version") String mobile_version);
 
 
 }
