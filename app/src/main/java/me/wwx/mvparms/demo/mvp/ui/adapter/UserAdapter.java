@@ -11,6 +11,7 @@ import me.wwx.mvparms.demo.R;
 import me.wwx.mvparms.demo.mvp.model.entity.User;
 import me.wwx.mvparms.demo.mvp.ui.holder.UserItemHolder;
 
+
 /**
  * Created by jess on 9/4/16 12:57
  * Contact with jess.yan.effort@gmail.com

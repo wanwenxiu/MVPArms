@@ -5,29 +5,26 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
 
+import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.DefaultAdapter;
+import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.UiUtils;
 import com.paginate.Paginate;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import butterknife.BindView;
-import common.AppComponent;
-import common.WEActivity;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import me.wwx.mvparms.demo.R;
 import me.wwx.mvparms.demo.di.component.DaggerUserComponent;
 import me.wwx.mvparms.demo.di.module.UserModule;
 import me.wwx.mvparms.demo.mvp.contract.UserContract;
 import me.wwx.mvparms.demo.mvp.presenter.UserPresenter;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import timber.log.Timber;
 
 
-public class UserActivity extends WEActivity<UserPresenter> implements UserContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class UserActivity extends BaseActivity<UserPresenter> implements UserContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     @Nullable
     @BindView(R.id.recyclerView)
@@ -41,7 +38,7 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
     private RxPermissions mRxPermissions;
 
     @Override
-    protected void setupActivityComponent(AppComponent appComponent) {
+    public void setupActivityComponent(AppComponent appComponent) {
         this.mRxPermissions = new RxPermissions(this);
         DaggerUserComponent
                 .builder()
@@ -52,12 +49,12 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
     }
 
     @Override
-    protected View initView() {
-        return LayoutInflater.from(this).inflate(R.layout.activity_user, null, false);
+    public int initView() {
+        return R.layout.activity_user;
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         mPresenter.requestUsers(true);//打开app时自动加载列表
     }
 
@@ -80,12 +77,7 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
         Timber.tag(TAG).w("showLoading");
         Observable.just(1)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Integer>() {
-                    @Override
-                    public void call(Integer integer) {
-                        mSwipeRefreshLayout.setRefreshing(true);
-                    }
-                });
+                .subscribe(integer -> mSwipeRefreshLayout.setRefreshing(true));
     }
 
     @Override

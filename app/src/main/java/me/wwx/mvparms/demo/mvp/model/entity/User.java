@@ -1,6 +1,5 @@
 package me.wwx.mvparms.demo.mvp.model.entity;
 
-
 public class User {
     private final int id;
     private final String login;

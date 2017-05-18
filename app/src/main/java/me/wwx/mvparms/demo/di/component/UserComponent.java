@@ -1,9 +1,9 @@
 package me.wwx.mvparms.demo.di.component;
 
 
+import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.di.scope.ActivityScope;
 
-import common.AppComponent;
 import dagger.Component;
 import me.wwx.mvparms.demo.di.module.UserModule;
 import me.wwx.mvparms.demo.mvp.ui.activity.UserActivity;

@@ -2,12 +2,12 @@ package me.wwx.mvparms.demo.mvp.model.api.service;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import me.wwx.mvparms.demo.mvp.model.entity.LoginEntity;
 import me.wwx.mvparms.demo.mvp.model.entity.User;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Query;
-import rx.Observable;
 
 /**
  * 存放关于用户的一些api
@@ -19,7 +19,7 @@ public interface UserService {
     String HEADER_API_VERSION = "Accept: application/vnd.github.v3+json";
 
     @Headers({HEADER_API_VERSION})
-    @GET("https://api.github.com/users")
+    @GET("/users")
     Observable<List<User>> getUsers(@Query("since") int lastIdQueried, @Query("per_page") int perPage);
 
     //shouji=%1$s&pwd=%2$s&macAddr=%3$s&id=%4$s&app_version=%5$s&mobile_type=%6$s&mobile_brand=%7$s&mobile_version=%8$s"
