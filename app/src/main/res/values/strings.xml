@@ -1,5 +1,10 @@
 <resources>
-    <string name="app_name">MVPArms</string>
+    <string name="app_name">MyDemo</string>
 
     <string name="can_not_find_version_name">暂无法获取版本号</string>
+
+    <string name="main_activity">主界面</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

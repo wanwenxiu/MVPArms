@@ -10,4 +10,5 @@
     <!-- 文本框的边框颜色 -->
     <color name="text_border">#b5b5b5</color>
 
+    <color name="color_0079C2">#0079C2</color>
 </resources>

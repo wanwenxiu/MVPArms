@@ -151,7 +151,6 @@ public class GlobalConfiguration implements ConfigModule {
                         ((AppCompatActivity) activity).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                     }
                 }
-
             }
 
 
