@@ -10,9 +10,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.jaeger.library.StatusBarUtil;
@@ -36,10 +36,10 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 /**
  * 作者：wwx on 2017/5/22 0022 14:49
  * 邮箱：wanwenxiu0709@foxmail.com
- * 描述：
+ * 描述：主界面
  */
 
-public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View, NavigationView.OnNavigationItemSelectedListener, SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View, NavigationView.OnNavigationItemSelectedListener,BottomNavigationView.OnNavigationItemSelectedListener{
     @BindView(R.id.maintoolbar)
     Toolbar maintoolbar;
     @BindView(R.id.navigation)
@@ -77,17 +77,28 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
         setSupportActionBar(maintoolbar);
 
+        StatusBarUtil.setColorForDrawerLayout(this,drawerLayout, ContextCompat.getColor(this, R.color.toolbar_color), 0);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, maintoolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.setDrawerListener(toggle);
+        drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
-        StatusBarUtil.setColorForDrawerLayout(this, (DrawerLayout) findViewById(R.id.drawer_layout), ContextCompat.getColor(this, R.color.toolbar_color), 0);
 
         navView.setNavigationItemSelectedListener(this);
 
-        viewpages.setAdapter(new MainButtonAdapter(getSupportFragmentManager()));
-        viewpages.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        BottomNavigationViewHelper.disableShiftMode(navigation);
+        navigation.setOnNavigationItemSelectedListener(this);
+
+        setViewPageAdapter(viewpages);
+    }
+
+    /**
+     * 设置ViewPage适配器
+     * @param viewpage
+     */
+    protected void setViewPageAdapter(ViewPager viewpage) {
+        viewpage.setAdapter(new MainButtonAdapter(getSupportFragmentManager()));
+        viewpage.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -95,6 +106,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
             @Override
             public void onPageSelected(int position) {
+                Log.d("geek", "onPageSelected: position"+position);
                 if (menuItem != null) {
                     menuItem.setChecked(false);
                 } else {
@@ -108,16 +120,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             public void onPageScrollStateChanged(int state) {
             }
         });
-        viewpages.setOffscreenPageLimit(2);
 
-        BottomNavigationViewHelper.disableShiftMode(navigation);
+        viewpage.setOffscreenPageLimit(2);
     }
 
-        @Override
+    @Override
         public void initData () {
 
         }
-
 
         @Override
         public void showLoading () {
@@ -148,6 +158,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
         @Override
         public boolean onNavigationItemSelected (@NonNull MenuItem item){
+            Log.d("geek", "onNavigationItemSelected: position"+item.getItemId());
             switch (item.getItemId()) {
                 case R.id.navigation_mine:
                     viewpages.setCurrentItem(0);
@@ -166,16 +177,36 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 case R.id.nav_item2:
                     break;
                 case R.id.nav_item3:
-                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                    drawer.closeDrawer(GravityCompat.START);
+                    closeDrawer();
                     break;
             }
             return false;
         }
 
-        @Override
-        public void onRefresh () {
+    /**
+     * 设置viewpage页面
+     * @param position
+     */
+    public void setViewPagesItem(int position){
+        viewpages.setCurrentItem(position);
+    }
 
-        }
+    /**
+     * 打开侧滑菜单
+     */
+    public void  openDrawer(){
+            if(drawerLayout != null){
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+     }
+
+    /**
+     * 关闭侧滑菜单
+     */
+    public void closeDrawer(){
+         if(drawerLayout != null){
+             drawerLayout.closeDrawer(GravityCompat.START);
+         }
+     }
 
     }
