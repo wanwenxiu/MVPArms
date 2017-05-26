@@ -12,7 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.jaeger.library.StatusBarUtil;
@@ -21,7 +21,6 @@ import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.UiUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import me.wwx.mvparms.demo.R;
 import me.wwx.mvparms.demo.di.component.DaggerMainComponent;
 import me.wwx.mvparms.demo.di.module.MainModule;
@@ -55,6 +54,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     private MenuItem menuItem;
 
+    /** 设置按钮 */
+    private MenuItem menuItemSetting;
+
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
         DaggerMainComponent
@@ -73,7 +75,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
 
         setSupportActionBar(maintoolbar);
 
@@ -106,14 +107,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
             @Override
             public void onPageSelected(int position) {
-                Log.d("geek", "onPageSelected: position"+position);
-                if (menuItem != null) {
-                    menuItem.setChecked(false);
-                } else {
-                    navigation.getMenu().getItem(0).setChecked(false);
-                }
-                menuItem = navigation.getMenu().getItem(position);
-                menuItem.setChecked(true);
+                settingMenuShow(position);
             }
 
             @Override
@@ -124,7 +118,24 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         viewpage.setOffscreenPageLimit(2);
     }
 
+
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_right_icon, menu);
+        menuItemSetting = menu.findItem(R.id.setting);
+        menuItemSetting.setVisible(false);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.setting){
+            showMessage("上传");
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+      @Override
         public void initData () {
 
         }
@@ -158,26 +169,23 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
         @Override
         public boolean onNavigationItemSelected (@NonNull MenuItem item){
-            Log.d("geek", "onNavigationItemSelected: position"+item.getItemId());
             switch (item.getItemId()) {
                 case R.id.navigation_mine:
-                    viewpages.setCurrentItem(0);
+                    setViewPagesItem(0);
                     break;
                 case R.id.navigation_jilv:
-                    viewpages.setCurrentItem(1);
+                    setViewPagesItem(1);
                     break;
                 case R.id.navigation_vedio:
-                    viewpages.setCurrentItem(2);
+                    setViewPagesItem(2);
                     break;
                 case R.id.navigation_image:
-                    viewpages.setCurrentItem(3);
+                    setViewPagesItem(3);
                     break;
-                case R.id.nav_item1:
+                case R.id.nav_calendar:
+                    launchActivity(new Intent(this,CalendarActivity.class));
                     break;
-                case R.id.nav_item2:
-                    break;
-                case R.id.nav_item3:
-                    closeDrawer();
+                case R.id.nav_version:
                     break;
             }
             return false;
@@ -189,6 +197,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
      */
     public void setViewPagesItem(int position){
         viewpages.setCurrentItem(position);
+        settingMenuShow(position);
     }
 
     /**
@@ -207,6 +216,16 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
          if(drawerLayout != null){
              drawerLayout.closeDrawer(GravityCompat.START);
          }
+     }
+
+    /**
+     * 显示或隐藏设置菜单
+     */
+    public void settingMenuShow(int position){
+        if(position == 0) menuItemSetting.setVisible(false);
+        else{
+            menuItemSetting.setVisible(true);
+        }
      }
 
     }
