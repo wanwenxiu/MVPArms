@@ -1,18 +1,20 @@
 package me.wwx.mvparms.demo.mvp.contract;
 
-import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
+import com.jess.arms.mvp.IView;
+
+import me.wwx.mvparms.demo.mvp.ui.adapter.TextTagsAdapter;
 
 /**
- * 作者：wwx on 2017/5/22 0022 14:51
+ * 作者：wwx on 2017/5/23 0023 10:57
  * 邮箱：wanwenxiu0709@foxmail.com
  * 描述：
  */
 
-public interface MainContract {
+public interface MineContract {
     //对于经常使用的关于UI的方法可以定义到BaseView中,如显示隐藏进度条,和显示文字消息
     interface View extends IView {
-
+        void setTagCloudAdapter(TextTagsAdapter adapter);
 
     }
 

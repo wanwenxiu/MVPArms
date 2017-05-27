@@ -4,15 +4,14 @@ import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
 
 /**
- * 作者：wwx on 2017/5/22 0022 14:51
+ * 作者：wwx on 2017/5/25 0025 14:58
  * 邮箱：wanwenxiu0709@foxmail.com
  * 描述：
  */
 
-public interface MainContract {
+public interface CalendarContract {
     //对于经常使用的关于UI的方法可以定义到BaseView中,如显示隐藏进度条,和显示文字消息
     interface View extends IView {
-
 
     }
 

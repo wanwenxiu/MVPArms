@@ -6,9 +6,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.jaeger.library.StatusBarUtil;
 import com.jess.arms.base.App;
 import com.jess.arms.base.delegate.AppDelegate;
 import com.jess.arms.di.module.GlobalConfigModule;
@@ -151,6 +153,9 @@ public class GlobalConfiguration implements ConfigModule {
                         ((AppCompatActivity) activity).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                     }
                 }
+
+                //设置透明状态栏
+                StatusBarUtil.setColor(activity, ContextCompat.getColor(activity, R.color.toolbar_color));
             }
 
 

@@ -39,7 +39,6 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
     private boolean isFirst = true;
     private int preEndIndex;
 
-
     @Inject
     public UserPresenter(UserContract.Model model, UserContract.View rootView, RxErrorHandler handler
             , AppManager appManager, Application application) {

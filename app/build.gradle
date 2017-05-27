@@ -76,4 +76,8 @@ dependencies {
     compile 'com.marlonmafra.android.widget:edittext-password:1.0.0'
     //StatusBar状态栏
     compile 'com.jaeger.statusbaruitl:library:1.3.2'
+    //3dTouch
+    compile 'com.moxun:tagcloudlib:1.2.0'
+
+
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-package="me.wwx.mvparms.demo">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="me.wwx.mvparms.demo">
 
 <uses-permission android:name="android.permission.INTERNET"/>
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -16,7 +17,8 @@ package="me.wwx.mvparms.demo">
     android:icon="@mipmap/logo"
     android:label="@string/app_name"
     android:supportsRtl="true"
-    android:theme="@style/AppTheme">
+    android:theme="@style/AppTheme"
+    >
 
     <activity android:name=".mvp.ui.activity.MainActivity"
         android:label="@string/main_activity">
@@ -29,6 +31,11 @@ package="me.wwx.mvparms.demo">
 
     <activity android:name=".mvp.ui.activity.UserActivity"
         android:label="主界面"
+        android:screenOrientation="portrait">
+    </activity>
+
+    <activity android:name=".mvp.ui.activity.CalendarActivity"
+        android:label="我的签到"
         android:screenOrientation="portrait">
     </activity>
 

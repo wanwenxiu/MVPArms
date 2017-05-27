@@ -3,34 +3,22 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_launcher"
-            android:title="安装" />
+            android:id="@+id/nav_calendar"
+            android:icon="@mipmap/main_left_item_calendar"
+            android:title="我的签到" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_launcher"
-            android:title="卸载" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_launcher"
-            android:title="模拟下载新版本完成" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_launcher"
-            android:title="Tools" />
+            android:id="@+id/nav_version"
+            android:icon="@mipmap/main_left_item_version"
+            android:title="版本更新"/>
     </group>
 
-    <item android:title="Communicate">
+   <!-- <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_launcher"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_launcher"
-                android:title="Send" />
+                android:id="@+id/nav_item3"
+                android:icon="@mipmap/main_left_item_version"
+                android:title="版本更新" />
         </menu>
-    </item>
+    </item>-->
 
 </menu>

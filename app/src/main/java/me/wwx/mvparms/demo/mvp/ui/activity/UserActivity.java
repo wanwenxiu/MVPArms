@@ -50,7 +50,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
 
     @Override
     public int initView() {
-        return R.layout.activity_user;
+        return R.layout.public_swiperefresh_recylerview;
     }
 
     @Override

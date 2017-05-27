@@ -10,26 +10,24 @@ import com.jess.arms.widget.imageloader.ImageLoader;
 import javax.inject.Inject;
 
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-import me.wwx.mvparms.demo.mvp.contract.MainContract;
-import me.wwx.mvparms.demo.mvp.ui.adapter.TextTagsAdapter;
+import me.wwx.mvparms.demo.mvp.contract.CalendarContract;
 
 
 /**
- * 作者：wwx on 2017/5/22 0022 14:50
+ * 作者：wwx on 2017/5/25 0025 15:04
  * 邮箱：wanwenxiu0709@foxmail.com
  * 描述：
  */
 
 @ActivityScope
-public class MainPresenter extends BasePresenter<MainContract.Model, MainContract.View> {
+public class CalendarPresenter extends BasePresenter<CalendarContract.Model, CalendarContract.View> {
     private RxErrorHandler mErrorHandler;
     private Application mApplication;
     private ImageLoader mImageLoader;
     private AppManager mAppManager;
 
-
     @Inject
-    public MainPresenter(MainContract.Model model, MainContract.View rootView
+    public CalendarPresenter(CalendarContract.Model model, CalendarContract.View rootView
             , RxErrorHandler handler, Application application
             , ImageLoader imageLoader, AppManager appManager) {
         super(model, rootView);
@@ -38,8 +36,6 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
         this.mImageLoader = imageLoader;
         this.mAppManager = appManager;
     }
-
-
 
     @Override
     public void onDestroy() {

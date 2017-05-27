@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/swipeRefresh">
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <com.moxun.tagcloudlib.view.TagCloudView
+            android:id="@+id/fragment_tagcloud"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:autoScrollMode="uniform"
+            app:radiusPercent="0.6"
+            app:scrollSpeed="3"
+            app:lightColor="@color/color_0079C2"
+            app:darkColor="@color/toolbar_color"
+            android:layout_alignParentBottom="true"
+            />
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+</android.support.v4.widget.SwipeRefreshLayout>
