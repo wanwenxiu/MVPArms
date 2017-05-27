@@ -9,7 +9,7 @@
     <item
         android:id="@+id/navigation_jilv"
         android:icon="@mipmap/main_jilv_icon"
-        android:title="日记" />
+        android:title="文字" />
 
     <item
         android:id="@+id/navigation_vedio"

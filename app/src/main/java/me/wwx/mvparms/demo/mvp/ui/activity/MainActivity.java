@@ -12,11 +12,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.PopupWindow;
+import android.view.ViewGroup;
 
+import com.example.zhouwei.library.CustomPopWindow;
 import com.jaeger.library.StatusBarUtil;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
@@ -61,7 +63,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     private boolean isShowSettngPop = false;
 
-    private PopupWindow addPopUpWindow = new PopupWindow();
+    private CustomPopWindow popWindow;
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
@@ -97,11 +99,15 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         navigation.setOnNavigationItemSelectedListener(this);
 
         setViewPageAdapter(viewpages);
+
+        View popAddView = LayoutInflater.from(this).inflate(R.layout.popup_add,null);
+        popWindow= new CustomPopWindow.PopupWindowBuilder(this)
+                .setView(popAddView)//显示的布局，还可以通过设置一个View
+                .size(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT) //设置显示的大小，不设置就默认包裹内容
+                .setFocusable(false)//是否获取焦点，默认为ture
+                .setOutsideTouchable(false)//是否PopupWindow 以外触摸dissmiss
+                .create();//创建PopupWindow
     }
-
-
-
-
 
     /**
      * 设置ViewPage适配器
@@ -153,12 +159,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.setting){
-            if(!isShowSettngPop){
-                item.setIcon(R.mipmap.menu_icon_add_select);
-            }else{
-                item.setIcon(R.mipmap.menu_icon_add_nomal);
-            }
-            isShowSettngPop = !isShowSettngPop;
+           setPopShow(isShowSettngPop,item);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -274,4 +275,15 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
          }
      }
 
+     public void setPopShow(boolean isshow,MenuItem item){
+         if(isshow) {
+             item.setIcon(R.mipmap.menu_icon_add_nomal);
+             popWindow.dissmiss();
+         }
+         else{
+             item.setIcon(R.mipmap.menu_icon_add_select);
+             popWindow.showAsDropDown(maintoolbar);
+         }
+         isShowSettngPop = !isShowSettngPop;
+     }
     }

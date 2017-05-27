@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/setting"
-        android:icon="@mipmap/icon_add"
+        android:icon="@mipmap/menu_icon_add_nomal"
         app:showAsAction="always"
         android:title="添加" />
 
