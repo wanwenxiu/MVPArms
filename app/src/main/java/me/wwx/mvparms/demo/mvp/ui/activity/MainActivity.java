@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.jaeger.library.StatusBarUtil;
 import com.jess.arms.base.BaseActivity;
@@ -107,7 +108,23 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
             @Override
             public void onPageSelected(int position) {
-                settingMenuShow(position);
+                if (menuItem != null) {
+                    menuItem.setChecked(false);
+                } else {
+                    navigation.getMenu().getItem(0).setChecked(false);
+                }
+                menuItem = navigation.getMenu().getItem(position);
+                menuItem.setChecked(true);
+
+                if(position == 0){
+                    settingMenuShow(false);
+                    setFabShow(true);
+                }else{
+                    settingMenuShow(true);
+                    setFabShow(false);
+                }
+
+
             }
 
             @Override
@@ -172,15 +189,23 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             switch (item.getItemId()) {
                 case R.id.navigation_mine:
                     setViewPagesItem(0);
+                    settingMenuShow(false);
+                    setFabShow(true);
                     break;
                 case R.id.navigation_jilv:
                     setViewPagesItem(1);
+                    settingMenuShow(true);
+                    setFabShow(false);
                     break;
                 case R.id.navigation_vedio:
                     setViewPagesItem(2);
+                    settingMenuShow(true);
+                    setFabShow(false);
                     break;
                 case R.id.navigation_image:
                     setViewPagesItem(3);
+                    settingMenuShow(true);
+                    setFabShow(false);
                     break;
                 case R.id.nav_calendar:
                     launchActivity(new Intent(this,CalendarActivity.class));
@@ -197,7 +222,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
      */
     public void setViewPagesItem(int position){
         viewpages.setCurrentItem(position);
-        settingMenuShow(position);
     }
 
     /**
@@ -221,11 +245,22 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     /**
      * 显示或隐藏设置菜单
      */
-    public void settingMenuShow(int position){
-        if(position == 0) menuItemSetting.setVisible(false);
+    public void settingMenuShow(boolean isshow){
+        if(isshow)  menuItemSetting.setVisible(true);
         else{
-            menuItemSetting.setVisible(true);
+            menuItemSetting.setVisible(false);
         }
+     }
+
+    /**
+     * 控制浮动按钮是否显示
+     * @param isshow
+     */
+     public void setFabShow(boolean isshow){
+         if(isshow)  fab.setVisibility(View.VISIBLE);
+         else{
+             fab.setVisibility(View.GONE);
+         }
      }
 
     }
