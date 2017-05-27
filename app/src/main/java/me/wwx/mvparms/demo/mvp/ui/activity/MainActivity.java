@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.PopupWindow;
 
 import com.jaeger.library.StatusBarUtil;
 import com.jess.arms.base.BaseActivity;
@@ -58,6 +59,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     /** 设置按钮 */
     private MenuItem menuItemSetting;
 
+    private boolean isShowSettngPop = false;
+
+    private PopupWindow addPopUpWindow = new PopupWindow();
+
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
         DaggerMainComponent
@@ -94,6 +99,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         setViewPageAdapter(viewpages);
     }
 
+
+
+
+
     /**
      * 设置ViewPage适配器
      * @param viewpage
@@ -117,14 +126,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 menuItem.setChecked(true);
 
                 if(position == 0){
-                    settingMenuShow(false);
+                    settingMenuShow(true);
                     setFabShow(true);
                 }else{
-                    settingMenuShow(true);
+                    settingMenuShow(false);
                     setFabShow(false);
                 }
-
-
             }
 
             @Override
@@ -140,14 +147,18 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_right_icon, menu);
         menuItemSetting = menu.findItem(R.id.setting);
-        menuItemSetting.setVisible(false);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.setting){
-            showMessage("上传");
+            if(!isShowSettngPop){
+                item.setIcon(R.mipmap.menu_icon_add_select);
+            }else{
+                item.setIcon(R.mipmap.menu_icon_add_nomal);
+            }
+            isShowSettngPop = !isShowSettngPop;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -189,22 +200,22 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             switch (item.getItemId()) {
                 case R.id.navigation_mine:
                     setViewPagesItem(0);
-                    settingMenuShow(false);
+                    settingMenuShow(true);
                     setFabShow(true);
                     break;
                 case R.id.navigation_jilv:
                     setViewPagesItem(1);
-                    settingMenuShow(true);
+                    settingMenuShow(false);
                     setFabShow(false);
                     break;
                 case R.id.navigation_vedio:
                     setViewPagesItem(2);
-                    settingMenuShow(true);
+                    settingMenuShow(false);
                     setFabShow(false);
                     break;
                 case R.id.navigation_image:
                     setViewPagesItem(3);
-                    settingMenuShow(true);
+                    settingMenuShow(false);
                     setFabShow(false);
                     break;
                 case R.id.nav_calendar:
