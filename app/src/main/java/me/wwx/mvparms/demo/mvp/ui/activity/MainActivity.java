@@ -12,17 +12,22 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.zhouwei.library.CustomPopWindow;
 import com.jaeger.library.StatusBarUtil;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.UiUtils;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.GlideEngine;
 
 import butterknife.BindView;
 import me.wwx.mvparms.demo.R;
@@ -65,6 +70,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     private CustomPopWindow popWindow;
 
+    private static final int REQUEST_CODE_CHOOSE = 1;
+
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
         DaggerMainComponent
@@ -101,6 +108,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         setViewPageAdapter(viewpages);
 
         View popAddView = LayoutInflater.from(this).inflate(R.layout.popup_add,null);
+        handleLogic(popAddView);
         popWindow= new CustomPopWindow.PopupWindowBuilder(this)
                 .setView(popAddView)//显示的布局，还可以通过设置一个View
                 .size(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT) //设置显示的大小，不设置就默认包裹内容
@@ -286,4 +294,54 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
          }
          isShowSettngPop = !isShowSettngPop;
      }
+
+
+    /**
+     * 处理弹出显示内容、点击事件等逻辑
+     * @param contentView
+     */
+    private void handleLogic(View contentView){
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(popWindow!=null){
+                    setPopShow(true,menuItemSetting);
+                }
+                String showContent = "";
+                switch (v.getId()){
+                    case R.id.addText:
+                        showContent = "文字";
+                        break;
+                    case R.id.addPhoto:
+                        showContent = "照片";
+                        Matisse.from(MainActivity.this)
+                                .choose(MimeType.ofImage())
+                                .theme(R.style.Matisse_Dracula)
+                                .countable(false)
+                                .maxSelectable(9)
+                                .imageEngine(new GlideEngine())
+                                .forResult(REQUEST_CODE_CHOOSE);
+                        break;
+                    case R.id.addVedio:
+                        showContent = "视频";
+                        break;
+
+                }
+                Toast.makeText(MainActivity.this,showContent,Toast.LENGTH_SHORT).show();
+            }
+        };
+        contentView.findViewById(R.id.addText).setOnClickListener(listener);
+        contentView.findViewById(R.id.addPhoto).setOnClickListener(listener);
+        contentView.findViewById(R.id.addVedio).setOnClickListener(listener);
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
+            Log.d("geek", "onActivityResult: 1="+Matisse.obtainResult(data));
+            Log.d("geek", "onActivityResult: 2="+Matisse.obtainPathResult(data));
+        }
+    }
+}

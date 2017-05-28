@@ -80,6 +80,7 @@ dependencies {
     compile 'com.moxun:tagcloudlib:1.2.0'
     //自定义PopWindow
     compile 'com.github.pinguo-zhouwei:CustomPopwindow:2.0.0'
-
+    //相册
+    compile 'com.zhihu.android:matisse:0.5.0-alpha3'
 
 }
