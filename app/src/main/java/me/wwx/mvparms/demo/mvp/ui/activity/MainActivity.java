@@ -25,6 +25,7 @@ import com.jaeger.library.StatusBarUtil;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.UiUtils;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
@@ -72,8 +73,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     private static final int REQUEST_CODE_CHOOSE = 1;
 
+    private RxPermissions mRxPermissions;
+
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
+        mRxPermissions = new RxPermissions(this);
         DaggerMainComponent
                 .builder()
                 .appComponent(appComponent)
@@ -313,14 +317,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                         showContent = "文字";
                         break;
                     case R.id.addPhoto:
-                        showContent = "照片";
-                        Matisse.from(MainActivity.this)
-                                .choose(MimeType.ofImage())
-                                .theme(R.style.Matisse_Dracula)
-                                .countable(false)
-                                .maxSelectable(9)
-                                .imageEngine(new GlideEngine())
-                                .forResult(REQUEST_CODE_CHOOSE);
+                        mPresenter.goCamarePhoto();
                         break;
                     case R.id.addVedio:
                         showContent = "视频";
@@ -335,7 +332,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         contentView.findViewById(R.id.addVedio).setOnClickListener(listener);
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -343,5 +339,21 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             Log.d("geek", "onActivityResult: 1="+Matisse.obtainResult(data));
             Log.d("geek", "onActivityResult: 2="+Matisse.obtainPathResult(data));
         }
+    }
+
+    @Override
+    public RxPermissions getRxPermissions() {
+        return mRxPermissions;
+    }
+
+    @Override
+    public void goCAMARE() {
+        Matisse.from(MainActivity.this)
+                .choose(MimeType.ofImage())
+                .theme(R.style.Matisse_Dracula)
+                .countable(false)
+                .maxSelectable(9)
+                .imageEngine(new GlideEngine())
+                .forResult(REQUEST_CODE_CHOOSE);
     }
 }

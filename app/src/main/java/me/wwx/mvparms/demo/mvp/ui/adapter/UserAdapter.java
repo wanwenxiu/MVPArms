@@ -17,6 +17,8 @@ import me.wwx.mvparms.demo.mvp.ui.holder.UserItemHolder;
  * Contact with jess.yan.effort@gmail.com
  */
 public class UserAdapter extends DefaultAdapter<User> {
+
+
     public UserAdapter(List<User> infos) {
         super(infos);
     }

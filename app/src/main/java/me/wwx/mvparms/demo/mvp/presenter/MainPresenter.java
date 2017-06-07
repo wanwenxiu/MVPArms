@@ -5,13 +5,13 @@ import android.app.Application;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
+import com.jess.arms.utils.PermissionUtil;
 import com.jess.arms.widget.imageloader.ImageLoader;
 
 import javax.inject.Inject;
 
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.wwx.mvparms.demo.mvp.contract.MainContract;
-import me.wwx.mvparms.demo.mvp.ui.adapter.TextTagsAdapter;
 
 
 /**
@@ -39,6 +39,16 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
         this.mAppManager = appManager;
     }
 
+    /**
+     * 请求外部存储的权限，并进入上传界面
+     */
+    public void  goCamarePhoto(){
+        //请求外部存储权限用于适配android6.0的权限管理机制
+        PermissionUtil.externalStorage(() -> {
+            //request permission success, do something.
+            mRootView.goCAMARE();
+        }, mRootView.getRxPermissions(), mRootView, mErrorHandler);
+    }
 
 
     @Override
