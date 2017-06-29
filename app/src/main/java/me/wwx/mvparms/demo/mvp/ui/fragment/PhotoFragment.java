@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,12 @@ import android.view.ViewGroup;
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.UiUtils;
+import com.mcxtzhang.layoutmanager.swipecard.CardConfig;
+import com.mcxtzhang.layoutmanager.swipecard.OverLayCardLayoutManager;
+import com.mcxtzhang.layoutmanager.swipecard.RenRenCallback;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,6 +28,7 @@ import me.wwx.mvparms.demo.di.component.DaggerPhotoComponent;
 import me.wwx.mvparms.demo.di.module.PhotoModule;
 import me.wwx.mvparms.demo.mvp.contract.PhotoContract;
 import me.wwx.mvparms.demo.mvp.presenter.PhotoPresenter;
+import me.wwx.mvparms.demo.mvp.ui.adapter.PicturePreviewAdapter;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -39,6 +47,8 @@ public class PhotoFragment extends BaseFragment<PhotoPresenter> implements Photo
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
     Unbinder unbinder;
+
+    public PicturePreviewAdapter adapter;
 
     public static PhotoFragment newInstance() {
         PhotoFragment fragment = new PhotoFragment();
@@ -62,6 +72,21 @@ public class PhotoFragment extends BaseFragment<PhotoPresenter> implements Photo
 
     @Override
     public void initData() {
+        List<String> mdata = new ArrayList<>();
+        mdata.add("http://pic6.huitu.com/res/20130116/84481_20130116142820494200_1.jpg");
+        mdata.add("http://img3.imgtn.bdimg.com/it/u=3242709860,2221903223&fm=214&gp=0.jpg");
+        mdata.add("http://pic1.cxtuku.com/00/06/78/b9903ad9ea2b.jpg");
+        mdata.add("http://img15.3lian.com/2015/h1/280/d/5.jpg");
+        mdata.add("http://img.sc115.com/uploads/sc/jpgs/1409/apic6104_sc115.com.jpg");
+        mdata.add("http://pic36.nipic.com/20131220/12708292_140812650116_2.jpg");
+
+        adapter = new PicturePreviewAdapter(mdata);
+        recyclerView.setLayoutManager(new OverLayCardLayoutManager());
+        recyclerView.setAdapter(adapter);
+        CardConfig.initConfig(getActivity());
+        ItemTouchHelper.Callback callback = new RenRenCallback(recyclerView, adapter, mdata);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
 
     }
 
