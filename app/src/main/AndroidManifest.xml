@@ -58,6 +58,15 @@
         android:name="me.wwx.mvparms.demo.app.GlobalConfiguration"
         android:value="ConfigModule"/>
 
+    <provider
+        android:name="android.support.v4.content.FileProvider"
+        android:authorities="me.wwx.mvparms.demo.mvp.ui.activity.fileprovider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/file_paths_public"></meta-data>
+    </provider>
 </application>
 
 </manifest>

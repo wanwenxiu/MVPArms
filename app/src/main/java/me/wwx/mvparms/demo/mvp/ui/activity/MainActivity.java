@@ -1,6 +1,7 @@
 package me.wwx.mvparms.demo.mvp.ui.activity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -29,6 +30,8 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
+import com.zhihu.matisse.filter.Filter;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import butterknife.BindView;
 import me.wwx.mvparms.demo.R;
@@ -71,7 +74,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     private CustomPopWindow popWindow;
 
-    private static final int REQUEST_CODE_CHOOSE = 1;
+    private static final int REQUEST_CODE_CHOOSE = 23;
 
     private RxPermissions mRxPermissions;
 
@@ -349,10 +352,17 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Override
     public void goCAMARE() {
         Matisse.from(MainActivity.this)
-                .choose(MimeType.ofImage())
-                .theme(R.style.Matisse_Dracula)
-                .countable(false)
+                .choose(MimeType.ofAll(), false)
+                .countable(true)
+                .capture(true)
+                .captureStrategy(
+                        new CaptureStrategy(true, "me.wwx.mvparms.demo.mvp.ui.activity.fileprovider"))
                 .maxSelectable(9)
+                .addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
+                .gridExpectedSize(
+                        getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
+                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+                .thumbnailScale(0.85f)
                 .imageEngine(new GlideEngine())
                 .forResult(REQUEST_CODE_CHOOSE);
     }

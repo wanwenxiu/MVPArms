@@ -81,7 +81,7 @@ dependencies {
     //自定义PopWindow
     compile 'com.github.pinguo-zhouwei:CustomPopwindow:2.0.0'
     //相册
-    compile 'com.zhihu.android:matisse:0.5.0-alpha3'
+    compile 'com.zhihu.android:matisse:0.5.0-alpha4'
     //卡片布局仿探探
     compile 'com.github.mcxtzhang:ZLayoutManager:V1.1.0'
 
