@@ -325,7 +325,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                     case R.id.addVedio:
                         showContent = "视频";
                         break;
-
                 }
                 Toast.makeText(MainActivity.this,showContent,Toast.LENGTH_SHORT).show();
             }
